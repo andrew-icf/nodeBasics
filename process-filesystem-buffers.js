@@ -54,7 +54,7 @@ console.log('Node is running as process #', process.pid); // pid = process ID
 //   fs.writeFileSync('test.txt', 'This is some tests text');
 //   fs.renameSync('test.txt', 'new.txt');
 //   console.log('File has size: ', fs.statSync('new.txt').size + 'bytes');
-//   console.log('File contents: ', fs.readFileSync('new.txt').toString());
+//   console.log('File contents: ', fs.readFileSync('new.txt').toString()); THIS IS AN EXAMPLE OF GETTING A BUFFER OBJ AND YOU NEED TO STRING IT
 // }
 
 // Asynchronous Call
@@ -77,7 +77,7 @@ console.log('Node is running as process #', process.pid); // pid = process ID
 //           fs.stat('new.txt', function(err, stats) {
 //             console.log('File has size: ', stats.size + 'bytes');
 //             fs.readFile('new.txt', function(err, data) {
-//               console.log('File contents: ', data.toString());
+//               console.log('File contents: ', data.toString());  THIS IS AN EXAMPLE OF GETTING A BUFFER OBJ AND YOU NEED TO STRING IT
 //             });
 //           });
 //         });
@@ -85,3 +85,19 @@ console.log('Node is running as process #', process.pid); // pid = process ID
 //     }
 //   });
 // });
+
+// BUFFERS
+// JS has difficulty dealing with binary data however, netowrking and fs require it
+// The BUFFER class provides a raw memory allocation for dealing with binary data directly
+// Buffers can be converted to/from strings by providing an encoding ascii, utf8(default), utf6le, ucs2, base64, binary, hex
+// Provides a handy way to convert strings to/from base64
+
+// var b = new Buffer('Hello');
+// console.log(b.toString());
+// console.log(b.toString('base64'));
+// var y = new Buffer('World').toString('base64');
+// console.log(b.toString('utf-8', 0, 2));
+
+// THE OS MODULE
+// Provides information about the currently running system
+// os.tmpDir(), os.hostname(), os.type(), os.platform(), os.arch(), os.release(), os.uptime(), os.loadavg(), os.totalmem(), os.freemem(), os.cpus(), os.networkInterfaces(), os.EOL(),

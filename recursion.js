@@ -56,3 +56,13 @@ console.log(
 //     }
 //   }
 // }
+
+
+// let s = "asdf-asdf-";
+// let dashes = 0;
+// for(let i = 0; i <= s.length; i++){
+//   if (s.charAt(i) === '-') {
+//     dashes++;
+//   }
+// }
+// console.log(dashes);
