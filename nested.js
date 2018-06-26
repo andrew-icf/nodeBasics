@@ -39,3 +39,16 @@ big();
 //     return card.replace(/[-]/g, "");
 //   });
 // }
+
+// let str = 'Mary and John only like to go out with Mary and John';
+// function evenNames () {
+//   let mary = (str.match(/John/g)).length;
+//   let john = (str.match(/Mary/g)).length;
+//   let count = mary + john;
+//   if (count % 2 === 0){
+//     console.log('true');
+//   } else {
+//     console.log('need more mary\'s or john\'s');
+//   }
+// }
+// evenNames();
