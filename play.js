@@ -3,11 +3,12 @@ function firstFactorial(num) {
 
   for (var i = 0; i < num; i++) {
     total = total * (num - i);
+    console.log('total', total);
   }
    console.log(total);
 }
 
-firstFactorial(8);
+firstFactorial(4);
 
 function largestWord(str) {
   var splitStr = str.split(' ');
@@ -37,3 +38,11 @@ function largestWord(str) {
 }
 
 largestWord('Well hello elephant asfdssdffeeer');
+
+function reverseStr(str) {
+  str = str.trim();
+  var rev = str.split('').reverse().join('');
+  console.log(rev);
+}
+
+reverseStr('Hello World      ');
