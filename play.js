@@ -1,15 +1,15 @@
+// Return the factorial from a number
 function firstFactorial(num) {
   let total = 1;
 
   for (var i = 0; i < num; i++) {
     total = total * (num - i);
-    console.log('total', total);
   }
    console.log(total);
 }
-
 firstFactorial(4);
 
+// Return the largest word in a string
 function largestWord(str) {
   var splitStr = str.split(' ');
   var max = 0;
@@ -36,13 +36,34 @@ function largestWord(str) {
   }, '');// <- intitial value being reduced by
   console.log(bigWord);
 }
-
 largestWord('Well hello elephant asfdssdffeeer');
 
+// Reverse a string
 function reverseStr(str) {
   str = str.trim();
   var rev = str.split('').reverse().join('');
   console.log(rev);
 }
-
 reverseStr('Hello World      ');
+
+// Return back what position a letter is in the alphabet
+function alphabetPosition(sen) {
+  let result = sen.toLowerCase().replace(/[^a-z]/g, '')
+        .replace(/./g, ([c]) => ' ' + (c.charCodeAt(0) - 'a'.charCodeAt(0) + 1))
+        .substr(1);
+  console.log(result);
+}
+alphabetPosition("TKdos");
+
+// replace every letter in the string with the letter follows it in the alphabet if vowel capitalize it
+function letterChange(str) {
+  var changed = str.replace(/[a-z]/gi, function(char) {
+    return char === 'z' ? 'a' : String.fromCharCode(char.charCodeAt()+ 1);
+  });
+
+  var cap = changed.replace(/a|e|i|o|u/g, function(vowel) {
+    return vowel.toUpperCase();
+  });
+  console.log(cap);
+}
+letterChange('bcdz')
