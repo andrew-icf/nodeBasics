@@ -67,3 +67,13 @@ function letterChange(str) {
   console.log(cap);
 }
 letterChange('bcdz')
+
+// adding numbers from 1 to a certain value
+function addTo(num) {
+  let start = 0;
+  for (let i = 0; i <= num; i++) {
+    start += i;
+  }
+  console.log('adding to ', start);
+}
+addTo(8);
