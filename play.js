@@ -77,3 +77,17 @@ function addTo(num) {
   console.log('adding to ', start);
 }
 addTo(8);
+
+// Capitializing certain letters in a string
+function cap(str) {
+  var wordarr = str.split(" ");
+
+  for (var i = 0; i < wordarr.length; i++) {
+   wordarr[i] = wordarr[i][0].toUpperCase() + wordarr[i].slice(1);
+  }
+  str = wordarr.join(" ");
+
+  console.log(str);
+}
+
+cap('dancing again');
