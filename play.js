@@ -91,3 +91,91 @@ function cap(str) {
 }
 
 cap('dancing again');
+
+// certain characters are in correct positions
+function char(str) {
+  // pad the strings so that if a character exists at the beginning
+  // of the string for example, we don't get on out-of-bounds error by
+  // trying to get the character before it
+  // if(str.charAt(0).match(/[a-z]/i)) return false;
+  // if(str.charAt(str.length - 1).match(/[a-z]/i)) return false;
+  var str = '=' + str + '=';
+
+  // loop through entire string
+  for (var i = 0; i < str.length; i++) {
+
+    // check to see if current character is an alphabetic character
+    // by using a simple case-insensitive regex pattern
+    if (str[i].match(/[a-z]/i) !== null) {
+
+      // check to see if a + symbol is to the left and right
+      // if not, then we know this string is not valid
+      if (str[i-1] !== '+' || str[i+1] !== '+') {
+        // return false;
+        console.log(false);
+      }
+
+    }
+
+  }
+  console.log(true);
+  // return true;
+}
+char('+s=+a+');
+// which number is bigger
+function checkNums(num1,num2) {
+
+    if (num2 > num1) {
+        console.log(true);
+    } else if (num1 === num2) {
+        console.log('-1');
+    } else {
+        console.log(false);
+    }
+
+}
+checkNums(8,8);
+
+// you can create a closure to keep the value passed to the function createBase even after the inner function is returned
+function createBase(base) {
+  return function(N) {
+    console.log(base + N);
+  }
+}
+var addSix = createBase(6);
+addSix(4);
+
+// use a closure to create a private counter
+function counter() {
+  var count = 0;
+  function add(increment) { return count += increment;}
+  function retrieve() {console.log('The count is at ' + count);}
+
+  return {
+    add: add,
+    retrieve: retrieve
+  }
+}
+// usage of our counter function
+var c = counter();
+c.add(5);
+c.add(15);
+c.retrieve();
+
+function timeDiff() {
+  var diff = Math.abs(new Date('2017/10/09 12:00') - new Date('2017/10/09 00:00'))
+  var min = Math.floor((diff/1000)/60);
+  var hours = min / 60;
+  console.log(min, hours);
+}
+timeDiff();
+
+// take in minutes and return hours : minutes
+function convertToHours(num) {
+  // var hours = Math.floor(num / 60);
+  // var minutes = num % 60;
+  // console.log('convert to hours ' + hours + ":" + minutes);
+  // OR
+  console.log('convert to hours ' + Math.floor(num / 60) + ":" + (num % 60));
+}
+convertToHours(120);
