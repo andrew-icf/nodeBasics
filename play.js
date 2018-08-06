@@ -24,8 +24,8 @@ function largestWord(str) {
   console.log(word + ' is the longest word at ' + max + ' characters');
 
   // another way - sort (smallest code with only words coming back)
-  var arr = str.match(/[a-z0-9]+/gi); // only characters a-z,0-9 stripping away punctuation (i flag means ignore case, + )
-  var longestWord = splitStr.sort(function(a, b) {
+  var arr = str.match(/[a-z]+/gi); // only characters a-z stripping away punctuation (i flag means ignore case, + )
+  var longestWord = arr.sort(function(a, b) {
     return b.length - a.length;
   });
   console.log(longestWord[0] + " is " + longestWord[0].length + " characters long.");
@@ -48,7 +48,7 @@ reverseStr('Hello World      ');
 
 // Return back what position a letter is in the alphabet
 function alphabetPosition(sen) {
-  let result = sen.toLowerCase().replace(/[^a-z]/g, '')
+  let result = sen.toLowerCase().replace(/[^a-z]/g, '') // ^ requiring a match to occur at the beginning of a line
         .replace(/./g, ([c]) => ' ' + (c.charCodeAt(0) - 'a'.charCodeAt(0) + 1))
         .substr(1);
   console.log(result);
@@ -78,7 +78,7 @@ function addTo(num) {
 }
 addTo(8);
 
-// Capitializing certain letters in a string
+// Capitializing the first letters in a string
 function cap(str) {
   var wordarr = str.split(" ");
 
@@ -143,7 +143,7 @@ function createBase(base) {
   }
 }
 var addSix = createBase(6);
-addSix(4);
+addSix(6);
 
 // use a closure to create a private counter
 function counter() {
@@ -179,3 +179,56 @@ function convertToHours(num) {
   console.log('convert to hours ' + Math.floor(num / 60) + ":" + (num % 60));
 }
 convertToHours(120);
+
+// Alphabet Soup - sort a string
+function charSort(str) {
+  // no special characters
+  console.log(str.split('').sort().join(''));
+  // possible special characters
+  str = str.trim();
+  var letters = str.match(/[a-z]/gi);
+  var sorted = letters.sort().join('');
+  console.log(sorted);
+}
+charSort('ferzsoaqwa');
+// Kaprekar's Constant
+function getKapped(num) {
+    var str = num.toString();
+    var numbers = str.match(/[0-9]/g).sort().join('');
+    var reverse = numbers.split('').reverse().join('');
+    var sortNum = parseInt(numbers);
+    var revNum = parseInt(reverse);
+    var str = Math.abs(sortNum - revNum);
+
+
+
+  console.log(str);
+}
+getKapped(8792);
+
+function strPattern(str) {
+  str = str.trim();
+  var letters = str.match(/[a-z?]/gi);
+}
+
+function questionMarks(str) {
+  str = str.trim();
+  // grab all patterns of letters and ?'s in between two digits
+  let matches = str.match(/\d[\w\?]*?\d/g);
+  if (!matches) console.log(false);
+  let result = false;
+  for(let match of matches){
+    // do the outside numbers equal 10
+    if(Number(match[0]) + Number(match[match.length -1]) === 10) {
+      // count the ?'s
+      if(match.split('').filter(char => char ==='?').length === 3){
+        result = true;
+      } else {
+        result = false;
+      }
+    }
+  }
+  console.log(result);
+}
+
+questionMarks("asdf7s???s4d8s???a2");
