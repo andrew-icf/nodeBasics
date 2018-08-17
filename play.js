@@ -7,7 +7,13 @@ function firstFactorial(num) {
   }
    console.log(total);
 }
-firstFactorial(4);
+firstFactorial(8);
+
+function recursiveFactorial(num) {
+  if (num === 0) return 1;
+  return num * recursiveFactorial(num - 1);
+}
+console.log(recursiveFactorial(8));
 
 // Return the largest word in a string
 function largestWord(str) {
@@ -183,7 +189,7 @@ convertToHours(120);
 // Alphabet Soup - sort a string
 function charSort(str) {
   // no special characters
-  console.log(str.split('').sort().join(''));
+  // console.log(str.split('').sort().join(''));
   // possible special characters
   str = str.trim();
   var letters = str.match(/[a-z]/gi);
@@ -192,19 +198,25 @@ function charSort(str) {
 }
 charSort('ferzsoaqwa');
 // Kaprekar's Constant
-function getKapped(num) {
-    var str = num.toString();
-    var numbers = str.match(/[0-9]/g).sort().join('');
-    var reverse = numbers.split('').reverse().join('');
-    var sortNum = parseInt(numbers);
-    var revNum = parseInt(reverse);
-    var str = Math.abs(sortNum - revNum);
+function KaprekarsConstant(num) {
+    let count = 0;
+    while(num !== 6174){
+      var numbers = num.toString().split('').sort();
 
+      var ascending = parseInt(numbers.join(''));
+      var descending = parseInt(numbers.reverse().join(''));
 
+      while(descending.toString().length < 4){
+        descending *= 10;
+      }
+      num = Math.abs(ascending - descending);
 
-  console.log(str);
+      count++;
+      if(count > 999) break;
+    }
+    console.log(count, num);
 }
-getKapped(8792);
+KaprekarsConstant(3524);
 
 function strPattern(str) {
   str = str.trim();
@@ -232,3 +244,177 @@ function questionMarks(str) {
 }
 
 questionMarks("asdf7s???s4d8s???a2");
+
+// nested array O(n^2)
+function hasDupes(array) {
+  for(var i = 0; i < array.length; i++) {
+    for (var n = 0; n < array.length; n++) {
+      if(i !== n && array[i] === array[n]){
+        return true;
+      }
+    }
+  }
+  return false;
+}
+hasDupes([1,2,1]);
+
+// is a faster algorithm than above at O(n)
+function hasDupes2(array) {
+  var existingItems = [];
+  for (var i = 0; i < array.length; i++) {
+    if(existingItems[array[i]] === undefined){
+      // console.log(array[i]);
+      existingItems[array[i]] = 1;
+      // console.log(existingItems);
+    } else {
+      console.log(true);
+    }
+  }
+  console.log(false);
+}
+hasDupes2([0,3,8, 8]);
+
+function KaprekarsConstant(num) {
+    let count = 0;
+    while (num != 6174) {
+        let numArray = num.toString().split('').sort();
+        let ascending = parseInt(numArray.join(''));
+        let descending = parseInt(numArray.reverse().join(''));
+        while (descending.toString().length < 4) {
+            descending *= 10;
+        }
+        num = Math.abs(ascending - descending);
+        count++;
+        if (count > 999) break;  // failover
+    }
+    return count;
+}
+KaprekarsConstant(6542);
+
+// grab this format ADS, H.
+function reggie(str) {
+  str = str.trim();
+  var match = str.match(/[a-z]{0,3}[, .]/gi).join('');
+  console.log(match);
+}
+
+reggie('asdfADS, H.asdf')
+
+// digits on either side of 3 ?'s that add to 10
+function QuestionsMarks(str) {
+    str = str.trim();
+    var patterns = str.match(/\d[\w\?]*?\d/g);
+    if(!patterns) return false;
+    let result = false;
+    for(let pattern of patterns) {
+        if(Number(pattern[0]) + Number(pattern[pattern.length - 1]) === 10 ) {
+            if(pattern.split('').filter(char => char === '?').length === 3 ) {
+                result = true;
+            } else {
+                result = false;
+            }
+        }
+    }
+    console.log(result);
+}
+
+QuestionsMarks("asdf7s???s4d8s???a2");
+
+function greaterNum(a, b) {
+  if(b >a) {
+    console.log(true);
+  } else if ( a === b) {
+    console.log("-1");
+  } else {
+    console.log(false);
+  }
+}
+greaterNum(20,20);
+
+// Capitalize beginning letter of every word
+function LetterCapitalize(str) {
+    var word = str.split(' ');
+    // console.log(word);
+    for(var i = 0; i < word.length; i++) {
+      // console.log(word[i]);
+        word[i] = word[i][0].toUpperCase() + word[i].slice(1);
+    }
+    str = word.join(' ');
+    console.log(str);
+
+}
+LetterCapitalize('hello word again');
+
+// return true if a string has the letter a followed by 3 spaces and then a b or vice versa
+function ABcheck(str) {
+  // one REGEX
+  let match = str.match(/[aA].{3}[bB]/) !== null;
+  // another REGEX
+  let pattern = /(a...b|b...a)/
+  let result = pattern.test(str);
+  console.log(match);
+}
+ABcheck("lane eborrowed");
+
+function vowelCount(str) {
+  if(str.length < 0) return;
+  str = str.trim();
+  let vowels = str.match(/a|e|i|o|u/gi).length;
+  return vowels;
+}
+console.log(vowelCount('asdfesdiAAAuosuu'));
+
+function wordCount(str) {
+  str = str.trim();
+  if ( str.length > 0 ) {
+    return str.split(' ').length;
+  } else {
+    return 0;
+  }
+}
+console.log(wordCount('I really like clean code      '));
+
+function ExOh(str) {
+  // regex!!!
+  str = str.trim();
+  let x = str.match(/x/gi);
+  let o = str.match(/o/gi);
+  let xlen = str && x ? x.length : 0;
+  let olen = str && o ? o.length : 0;
+  return xlen === olen;
+  // loop
+  // str = str.trim();
+  // let arr = str.split('');
+  // let o = [];
+  // let x = [];
+  // for (let i = 0; i < arr.length; i++) {
+  //   if (arr[i] === 'x') {
+  //     x.push(arr[i])
+  //   } else {
+  //     o.push(arr[i]);
+  //   }
+  // }
+  // return o.length === x.length;
+}
+
+console.log(ExOh('xxxooo'));
+
+function palindrome(str){
+  str = str.trim().replace(/ /g, '');
+  let middle = Math.floor(str.length / 2);
+  for (let i = 0; i < middle; i++) {
+    if (str[i] !== str[(str.length - i) - 1]) {
+      return false;
+    }
+  }
+  return true;
+}
+console.log(palindrome('dont nod'));
+
+let myObj = {};
+myObj['firstName'] = 'Boom';
+myObj['age'] = 32;
+console.log(Object.keys(myObj));
+console.log(Object.values(myObj));
+console.log(Object.entries(myObj));
+console.log(myObj.hasOwnProperty('age'));
