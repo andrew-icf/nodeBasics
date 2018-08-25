@@ -11,6 +11,46 @@
 //   }
 // }
 
+// Builds out a Node Tree - FUN FUN FUNCTION
+let categories = [
+  {id: 'animals', 'parent': null},
+  {id: 'mammals', 'parent': 'animals'},
+  {id: 'cats', 'parent': 'mammals'},
+  {id: 'dogs', 'parent': 'mammals'},
+  {id: 'chihuahua', 'parent': 'dogs'},
+  {id: 'sammoyed', 'parent': 'dogs'},
+  {id: 'persian', 'parent': 'cats'},
+  {id: 'siamese', 'parent': 'cats'}
+]
+
+let makeTree = (categories, parent) => {
+  let node = {};
+  categories
+    .filter(c => c.parent === parent)
+    .forEach(c =>
+      node[c.id] = makeTree(categories, c.id))
+  return node;
+}
+
+console.log(
+  JSON.stringify( makeTree(categories, null), null, 2 ));
+
+// ANSWER
+// {
+//   "animals": {
+//     "mammals": {
+//       "cats": {
+//         "persian": {},
+//         "siamese": {}
+//       },
+//       "dogs": {
+//         "chihuahua": {},
+//         "sammoyed": {}
+//       }
+//     }
+//   }
+// }
+
 // Bubble Sort
 function bubbleSort(arr) {
   // controls pass throughs
@@ -28,6 +68,22 @@ function bubbleSort(arr) {
   console.log('BUBBLE ->', arr);
 }
 bubbleSort([2,5,8,6,1,4,3,7]);
+
+function bubs(arr) {
+  let wall = arr.length;
+  while( wall >= 0 ) {
+    for(let i = 0; i < wall; i++) {
+      if(arr[i] > arr[i + 1]) {
+        let temp = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = temp;
+      }
+    }
+    wall--;
+  }
+  return arr;
+}
+console.log('SECONDBUBBLE ->', bubs([2,5,8,6,1,4,3,7]));
 
 function selectionSort(arr) {
   var minIndex, temp;
@@ -65,36 +121,32 @@ insertionSort([54, 26, 93, 17, 77, 31, 44, 55, 20]);
 function mergeSort(arr) {
   if (arr.length === 1) {
     // return once we hit an array with a single item
-    return arr
+    return arr;
   }
 
-  const middle = Math.floor(arr.length / 2) // get the middle item of the array rounded down
-  const left = arr.slice(0, middle) // items on the left side
-  const right = arr.slice(middle) // items on the right side
+  const middle = Math.floor(arr.length / 2); // get the middle item of the array rounded down
+  const left = arr.slice(0, middle); // items on the left side
+  const right = arr.slice(middle); // items on the right side
 
-  return merge(
-    mergeSort(left),
-    mergeSort(right)
-  )
+  return merge( mergeSort(left), mergeSort(right) );
 }
 
 // compare the arrays item by item and return the concatenated result
 function merge(left, right) {
-  let result = []
-  let indexLeft = 0
-  let indexRight = 0
+  let result = [];
+  let indexLeft = 0;
+  let indexRight = 0;
 
   while (indexLeft < left.length && indexRight < right.length) {
     if (left[indexLeft] < right[indexRight]) {
-      result.push(left[indexLeft])
-      indexLeft++
+      result.push(left[indexLeft]);
+      indexLeft++;
     } else {
-      result.push(right[indexRight])
-      indexRight++
+      result.push(right[indexRight]);
+      indexRight++;
     }
   }
-
-  return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight))
+  return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
 }
 const list = [2, 5, 1, 3, 7, 2, 3, 8, 6, 3]
 console.log('MERGE ->',mergeSort(list)) // [ 1, 2, 2, 3, 3, 3, 5, 6, 7, 8 ]
@@ -116,7 +168,7 @@ function quickSort(arr) {
   }
   return [...quickSort(left), pivot, ...quickSort(right)];
 }
-console.log('QUICK ->', quickSort([5,8,6,4,1,2,2,88]));
+console.log('QUICK ->', quickSort([5,8,6,4,1,2,2,3,3]));
 
 function ArrayAddition(arr) {
   let added = 0;
@@ -149,7 +201,7 @@ console.log(add(9));
 const memoizedAdd = () => {
   let cache = {};
   return (n) => {
-    if (n in cache) {
+    if (n in cache) { // cache will remember it's values since the returned function has a closure over it
       console.log('Fetching from cache');
       return cache[n];
     } else {
