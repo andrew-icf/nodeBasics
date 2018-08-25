@@ -11,7 +11,7 @@ firstFactorial(8);
 
 function recursiveFactorial(num) {
   if (num === 0) return 1;
-  return num * recursiveFactorial(num - 1);
+  return num * recursiveFactorial(num - 1); // remember you have to return your function otherwise it will be undefined
 }
 console.log(recursiveFactorial(8));
 
@@ -418,3 +418,54 @@ console.log(Object.keys(myObj));
 console.log(Object.values(myObj));
 console.log(Object.entries(myObj));
 console.log(myObj.hasOwnProperty('age'));
+
+// -------- MEMOIZATION
+function times10(num) {
+  return num * 10;
+}
+
+const memoization = () => {
+  const cache = {};
+  return (n) => {
+    if( n in cache ){
+      console.log('Pulling from cache... ');
+      return cache[n];
+    } else {
+      console.log('Doing the work...')
+      let result = times10(n);
+      cache[n] = result;
+      return result;
+    }
+  }
+  console.log('cache ', cache);
+}
+const newMultiply = memoization();
+console.log(newMultiply(5));
+console.log(newMultiply(5));
+
+function ArithGeo(arr)  {
+  if (arr.length < 2) return -1;
+  var diff = arr[1] - arr[0];
+  var prod = arr[1] / arr[0];
+  // code goes here
+  var isArith = function(arr) {
+    for (var i = 1; i < arr.length - 1; i++) {
+      if (arr[i + 1] - arr[i] !== diff) return false;
+    }
+    return true;
+  };
+
+  var isGeo = function(arr) {
+    for (var i = 1; i < arr.length - 1; i++) {
+      if (arr[i + 1] / arr[i] !== prod) return false;
+    }
+    return true;
+  };
+
+  if (isArith(arr)) return "Arithmetic";
+  else if (isGeo(arr)) return "Geometric";
+  else return -1;
+}
+
+console.log(ArithGeo([5,10,15,20]));
+console.log(ArithGeo([2,6,18,54]));
