@@ -1,16 +1,26 @@
+function grabString(str1, str2){
+  var reg = new RegExp(str2, 'g');
+  var result = str1.replace(reg, '');
+  return result;
+}
+console.log('grabString', grabString('Hello There', 'e'));
 // COME BACK TO THIS
-// var D = ["able", "ale", "apple", "bale", "kangaroo"];
-// var S = "abppplee";
+var D = ["able", "ale", "apple", "bale", "kangaroo"];
+var S = "abppplee";
 
-// function largeInOrder() {
-//   let largest = null;
-//   for(var i = 0; i < D.length; i++) {
-//     for(var n = 0; n < S.length; n++) {
-
-//     }
-//   }
-// }
-
+function largeInOrder() {
+  let largest = null;
+  let words = [];
+  for(let i = 0; i < D.length; i++) {
+    for(let j = 0; j < D[i].length; j++){
+      console.log('j',D[i][j]);
+    }
+  }
+  for(let n = 0; n <= S.length; n++) {
+    console.log('S', S[n]);
+  }
+}
+console.log(largeInOrder());
 // Builds out a Node Tree - FUN FUN FUNCTION
 let categories = [
   {id: 'animals', 'parent': null},

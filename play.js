@@ -1,3 +1,13 @@
+let s = "asdf-asdf-";
+let dashes = 0;
+for(let i = 0; i <= s.length; i++){
+  if (s.charAt(i) === '-') {
+    dashes++;
+  }
+}
+var dash = s.match(/-/g).length;
+console.log('dashes', dash);
+
 // Return the factorial from a number
 function firstFactorial(num) {
   let total = 1;
@@ -401,7 +411,7 @@ console.log(ExOh('xxxooo'));
 
 function palindrome(str){
   str = str.trim().replace(/ /g, '');
-  let middle = Math.floor(str.length / 2);
+  let middle = Math.ceil(str.length / 2);
   for (let i = 0; i < middle; i++) {
     if (str[i] !== str[(str.length - i) - 1]) {
       return false;
@@ -469,3 +479,84 @@ function ArithGeo(arr)  {
 
 console.log(ArithGeo([5,10,15,20]));
 console.log(ArithGeo([2,6,18,54]));
+
+function wordSplosion(str) {
+  if (typeof str !== 'string') {
+    return "Please enter a string";
+  } else {
+    let result = '';
+    for (let i = 0; i <= str.length; i++) {
+      result += str.substring(0, i);
+    }
+    return result;
+  }
+}
+console.log('wordSplosion', wordSplosion('Code'));
+// ***** REMEMBER that recursion works it's way down and then builds up after hitting the base case
+// Break down to base case Cod => Co => C => Code(str)
+// Building it back C => Co => Cod => Code = CCoCodCode
+function wordSplosionRecursion(str) {
+  if(typeof str !== 'string') {
+    return "Please enter in a string";
+  } else {
+    if (str.length === 0) return str;
+    return wordSplosionRecursion(str.substring(0, str.length -1)) + str;
+  }
+}
+console.log('Splosion Recursion', wordSplosionRecursion('Code'));
+
+function maxSpan(arr) {
+  let iIndex;
+  let first = arr[0];
+  let last = arr[arr.length - 1];
+  for(let i = 0; i < arr.length; i++) {
+    if(arr[i] === first || arr[i] === last) {
+      iIndex = i;
+    }
+  }
+  return iIndex;
+}
+console.log('maxSpan', maxSpan([1,6,9,8,2,4,5,6]))
+
+function withoutString(str1, str2) {
+  let reg = new RegExp(str2, 'g');
+  let result = str1.replace(reg, '');
+  return result;
+}
+console.log('WithoutString', withoutString('Hello there', 'e'));
+
+function sumOfNumbers(str) {
+  let result = 0;
+  let numArr = str.match(/[0-9]+/g);
+  // let intArr = numArr.map(function(num) {
+  //   return +num;
+  // });
+  // let recurse = function(array) {
+  //   return (array.length === 0) ? 0 : array[0] + recurse(array.slice(1));
+  // }
+  // recurse(intArr);
+  for(let i = 0; i < numArr.length; i++) {
+    result += +numArr[i];
+  }
+  return result;
+}
+console.log('SumOfNumbers', sumOfNumbers('asd25a2sdf75'));
+
+function anagram(word1, word2) {
+  let sort1 = word1.split('').sort().join('');
+  let sort2 = word2.split('').sort().join('');
+  return sort1 === sort2 ? true : false;
+}
+console.log('anagram', anagram('aligned', 'leading'));
+
+function arrayAddition(arr) {
+  let result = 0;
+  let largest = Math.max.apply(Math, arr);
+  let index = arr.indexOf(largest);
+  let indexRemoval = arr.splice(index, 1);
+  for(let i = 0; i < arr.length; i++) {
+    result += arr[i];
+  }
+  return result === largest;
+}
+console.log('ArrayAddition', arrayAddition([1,2,3,6]));
