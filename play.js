@@ -542,12 +542,32 @@ function sumOfNumbers(str) {
 }
 console.log('SumOfNumbers', sumOfNumbers('asd25a2sdf75'));
 
-function anagram(word1, word2) {
-  let sort1 = word1.split('').sort().join('');
-  let sort2 = word2.split('').sort().join('');
-  return sort1 === sort2 ? true : false;
+const anagramWords = ['map', 'art', 'how', 'rat', 'tar', 'who', 'pam', 'shoop']; // Input
+// const output = {
+//   key1: ["map", "pam"],
+//   key2: ["art", "rat", "tar"],
+//   key3: ["shoop"],
+//   key4: ["how", "who"]
+// }
+function anagram(anagramWords) {
+  const anagrams = {};
+  anagramWords.forEach((word) => {
+      let sortedWord = alphabetize(word);
+      if(!anagrams[sortedWord]) {
+        return anagrams[sortedWord] = [word]; // anagrams = {'amp' : ['map'] }
+      }
+      anagrams[sortedWord].push(word); // ES6 arrow function has an implicit return
+      // anagrams = { 'amp' : ['map', 'pam'] }
+  });
+  return anagrams;
 }
-console.log('anagram', anagram('aligned', 'leading'));
+function alphabetize(word) {
+  if(!word) return;
+  return word.split('').sort().join('');
+}
+console.log('anagram', anagram(anagramWords));
+
+
 
 function arrayAddition(arr) {
   let result = 0;
@@ -560,3 +580,98 @@ function arrayAddition(arr) {
   return result === largest;
 }
 console.log('ArrayAddition', arrayAddition([1,2,3,6]));
+
+function canBalance(arr) {
+  let len = arr.length;
+  while(len > 0) {
+    let arrLeft = arr.slice(0, len - 1);
+    let arrRight = arr.slice(len - 1);
+    let leftTotal = 0;
+    let rightTotal = 0;
+    for(let i = 0; i < arrLeft.length; i++){
+      leftTotal += arrLeft[i];
+    }
+    for(let i = 0; i < arrRight.length; i++) {
+      rightTotal += arrRight[i];
+    }
+    if (leftTotal === rightTotal) {
+      return true;
+    } else {
+      len--;
+    }
+  }
+  return false;
+}
+console.log('CanBalance', canBalance([1,2,1,1,1]));
+
+function charCount(str) {
+   str = str.toLowerCase();
+   let charObj = {};
+   let chars = str.match(/[a-z0-9]/g);
+   chars.forEach((char) => {
+     charObj[char] > 0 ? charObj[char]++ : charObj[char] = 1;
+   });
+   return charObj;
+ }
+console.log('CHARCOUNT', charCount('aaAAssf 3 6 2 #$@ a4    '));
+
+function letterCount(str) {
+  var words = str.replace(/[^A-Za-zs]/g, '').split(/s+/);
+
+  var counts = words.map(function(word) {
+    word = word.toLowerCase();
+    var letters = [];
+    for (letter of word) {
+      if (letters[letter]) {
+        letters[letter] += 1;
+      } else {
+        letters[letter] = 1;
+      }
+    }
+    return letters;
+  });
+
+  var greatestCounts = counts.map(function(word) {
+    var greatest = 0;
+    for (letter in word) {
+      if (word[letter] > greatest) {
+        greatest = word[letter];
+      }
+    }
+    return greatest;
+  });
+
+  var greatest = Math.max.apply(null, greatestCounts);
+  if (greatest <= 1) return -1;
+  return words[greatestCounts.indexOf(greatest)];
+}
+console.log('LETTER-COUNT', letterCount('coderbyte is cool'));
+
+function dashInsert(str) {
+    let arr = str.split('');
+    for(let i = 0; i < arr.length; i++) {
+        arr[i] = parseInt(arr[i]);
+    }
+    for(let i = 0; i < arr.length - 1; i++) {
+        if(arr[i] % 2 === 1 && arr[i+1] % 2 === 1) {
+            arr.splice(i+1, 0, "-");
+        }
+    }
+    return arr.join('');
+}
+console.log('DASHINSERT ',dashInsert('999435'));
+
+function stringPermutation(str) {
+  if(str.length < 2) return str;
+  let results = [];
+  for(let i = 0; i < str.length; i++) {
+    let firstChar = str[i];
+    let remainingChars = str.substring(0,i) + str.substring(i+1);
+    let innerPermutations = stringPermutation(remainingChars);
+    for(var j = 0; j < innerPermutations.length; j++) {
+      results.push(firstChar + innerPermutations[j]);
+    }
+  }
+  return results;
+}
+console.log('STRINGPERMUTATION ', stringPermutation('ab'));

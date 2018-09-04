@@ -74,3 +74,7 @@ con.addConnection('Sony', 'PS4');
 con.addConnection('Sony', 'VR');
 con.addConnection('Nintendo', 'Wii');
 con.addConnection('Nintendo', 'Wii U');
+con.contains('Super Nintendo');
+con.hasConnection('Sony', 'PS3');
+con.removeConnection('Sony', 'PS3');
+con.remove('PS3';)
