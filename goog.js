@@ -11,16 +11,20 @@ var S = "abppplee";
 function largeInOrder() {
   let largest = null;
   let words = [];
-  for(let i = 0; i < D.length; i++) {
-    for(let j = 0; j < D[i].length; j++){
-      console.log('j',D[i][j]);
+  while(D.length > 0) {
+    let word = [];
+    for(let i = 0; i < D.length; i++) {
+      word.push(D[i])
     }
-  }
-  for(let n = 0; n <= S.length; n++) {
-    console.log('S', S[n]);
+    console.log(word)
+    for(let n = 0; n <= S.length; n++) {
+      console.log('S', S[n]);
+    }
+    D.length--;
   }
 }
 console.log(largeInOrder());
+
 // Builds out a Node Tree - FUN FUN FUNCTION
 let categories = [
   {id: 'animals', 'parent': null},
@@ -142,43 +146,84 @@ function mergeSort(arr) {
 }
 
 // compare the arrays item by item and return the concatenated result
-function merge(left, right) {
+function merge(leftArr, rightArr) {
   let result = [];
-  let indexLeft = 0;
-  let indexRight = 0;
+  let leftIndex = 0;
+  let rightIndex = 0;
 
-  while (indexLeft < left.length && indexRight < right.length) {
-    if (left[indexLeft] < right[indexRight]) {
-      result.push(left[indexLeft]);
-      indexLeft++;
+  while (leftIndex < leftArr.length && rightIndex < rightArr.length) {
+    if (leftArr[leftIndex] < rightArr[rightIndex]) {
+      result.push(leftArr[leftIndex]);
+      leftIndex++;
     } else {
-      result.push(right[indexRight]);
-      indexRight++;
+      result.push(rightArr[rightIndex]);
+      rightIndex++;
     }
   }
-  return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
+  // if you don't want to concat on the slice'd arrays
+  // while( leftIndex < leftArr.length){
+  //   result.push(leftArr[leftIndex]);
+  //   leftIndex++;
+  // }
+  // while(rightIndex < rightArr.length) {
+  //   result.push(rightArr[rightIndex]);
+  //   rightIndex++;
+  // }
+  // return result;
+  return result.concat(leftArr.slice(leftIndex)).concat(rightArr.slice(rightIndex));
 }
 const list = [2, 5, 1, 3, 7, 2, 3, 8, 6, 3]
 console.log('MERGE ->',mergeSort(list)) // [ 1, 2, 2, 3, 3, 3, 5, 6, 7, 8 ]
 
-// Quick Sort ES6
-function quickSort(arr) {
-  if (arr.length <= 1) return arr;
+// The real QuickSort
+function pivot(arr, start=0, end=arr.length-1) {
+  let pivot = arr[start];
+  let swapInd = start;
 
-  let pivot = arr[arr.length - 1];
-  let left = [];
-  let right = [];
-
-  for(let i = 0; i < arr.length - 1; i++) {
-    if(arr[i] < pivot) {
-      left.push(arr[i]);
-    } else {
-      right.push(arr[i]);
+  function swap(array, i, j) {
+    let temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  for(let i = start+1; i < arr.length; i++) {
+    if(pivot > arr[i]) {
+      swapInd++;
+      swap(arr, swapInd, i);
     }
   }
-  return [...quickSort(left), pivot, ...quickSort(right)];
+  swap(arr, start, swapInd);
+  return swapInd;
+}
+
+function quickSort(arr, left=0, right=arr.length-1) {
+  if(arr.length < 2) return arr;
+  if(left < right) {
+    let pivotInd = pivot(arr, left, right);
+    quickSort(arr, left, pivotInd-1);
+    quickSort(arr, pivotInd+1, right);
+  }
+  return arr;
 }
 console.log('QUICK ->', quickSort([5,8,6,4,1,2,2,3,3]));
+
+// ************************************************************************************************************************                                      Quick Sort ES6 DO NOT USE THIS FOR YOUR INTERVIEW SINCE YOU ARE CREATING TWO ARRAYS, THIS SHOULD BE HANDLED IN PLACE ************************************************************************************************************************
+// function quickSort(arr) {
+//   if (arr.length <= 1) return arr;
+//
+//   let pivot = arr[arr.length - 1];
+//   let left = [];
+//   let right = [];
+//
+//   for(let i = 0; i < arr.length - 1; i++) {
+//     if(arr[i] < pivot) {
+//       left.push(arr[i]);
+//     } else {
+//       right.push(arr[i]);
+//     }
+//   }
+//   return [...quickSort(left), pivot, ...quickSort(right)];
+// }
+// console.log('QUICK ->', quickSort([5,8,6,4,1,2,2,3,3]));
 
 function ArrayAddition(arr) {
   let added = 0;
@@ -226,3 +271,30 @@ const memoizedAdd = () => {
 const newAdd = memoizedAdd();
 console.log(newAdd(4)); // calculated
 console.log(newAdd(4)); // cached
+
+
+
+
+
+
+
+
+
+// function largeInOrder() {
+//   let largest = null;
+//   let words = [];
+//   // while(D.length > 0) {
+//     let j, i;
+//     for(let i = 0; i < D.length; i++) {
+//       console.log(D[i]);
+//       for(j = 0; j < D[i].length; j++) {
+//         console.log('j', D[i][j]);
+//       }
+//     }
+//     for(let n = 0; n <= S.length; n++) {
+//       console.log('S', S[n]);
+//     }
+//   //   D.length--;
+//   // }
+// }
+// console.log(largeInOrder());

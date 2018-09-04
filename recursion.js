@@ -111,3 +111,40 @@ function gcdDijkstra(num1, num2) {
   else return gcdDijkstra(num1, num2-num1);
 }
 console.log('Dijkstra GCD', gcdDijkstra(14, 49));
+
+// Using helper functions for recursion when dealing with scope issues
+function collectOddValues(arr) {
+  let result = [];
+
+  function helper(helperArr) {
+    if(helperArr.length === 0) return;
+    if(helperArr[0] % 2 !== 0) {
+      result.push(helperArr[0]);
+    }
+     helper(helperArr.slice(1));
+  }
+  helper(arr);
+  return result;
+}
+console.log('COLLECTODDS', collectOddValues([1,2,3,4,5,6,7]));
+
+// pure recursive call of collectOddValues
+function collectOddValuesPure(arr) {
+  let newArr = []; // this will be defined as a new array each time through which is ok here due to concatenating the arrays at the end
+  if(arr.length === 0) return newArr;
+  if(arr[0] % 2 !== 0){
+    newArr.push(arr[0])
+  }
+  newArr = newArr.concat(collectOddValuesPure(arr.slice(1))); // every recursion will concat all the arrays with only odds
+  return newArr;
+}
+console.log('COLLECTODDS-PURE', collectOddValuesPure([1,2,3,4,5,6,7]));
+
+
+
+
+
+// pure recursion tips to put in notes ***************************************
+// for arrays you can use methods like slice, concat, and the spread operator so that you make copies of the arrays without mutating them
+// strings are immutable so you will need to use methods like slice or substring to make copies of them
+// to make copies of OBJECTS use Object.assign or the spread operator

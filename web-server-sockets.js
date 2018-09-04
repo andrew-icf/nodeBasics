@@ -1,4 +1,4 @@
-var http = require('http');
+// var http = require('http');
 
 // 'req' function a writeable stream that can be piped to http
 // var req = http.request(options, function(res){ // 'res' a readable stream
