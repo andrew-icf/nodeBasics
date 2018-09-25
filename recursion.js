@@ -140,11 +140,34 @@ function collectOddValuesPure(arr) {
 }
 console.log('COLLECTODDS-PURE', collectOddValuesPure([1,2,3,4,5,6,7]));
 
+function power(base, exp){
+  if(exp === 0) return 1;
+  return base * power(base, exp-1);
+}
+console.log('POWER', power(4));
 
-
+function productOfArray(arr) {
+  if(arr.length <= 1) return arr[0];
+  return arr[0] * productOfArray(arr.slice(1));
+}
+console.log('PRODUCTOFARRAY', productOfArray([1,2,3,10]));
 
 
 // pure recursion tips to put in notes ***************************************
 // for arrays you can use methods like slice, concat, and the spread operator so that you make copies of the arrays without mutating them
 // strings are immutable so you will need to use methods like slice or substring to make copies of them
 // to make copies of OBJECTS use Object.assign or the spread operator
+
+function depthFirstSearch(root) {
+  let result = [];
+  let visited = {};
+
+  function helper(neighbor) {
+    if(neighbor === 0) return;
+    if(!visited[neighbor]) {
+      visited[neighbor] = true;
+      result.push(neighbor);
+    }
+  }
+  return result;
+}

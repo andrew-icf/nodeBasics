@@ -1,29 +1,42 @@
-function grabString(str1, str2){
-  var reg = new RegExp(str2, 'g');
-  var result = str1.replace(reg, '');
-  return result;
-}
-console.log('grabString', grabString('Hello There', 'e'));
 // COME BACK TO THIS
-var D = ["able", "ale", "apple", "bale", "kangaroo"];
+var D = ["able", "ale", "appple", "bale", "kangaroo"];
 var S = "abppplee";
 
-function largeInOrder() {
-  let largest = null;
-  let words = [];
-  while(D.length > 0) {
-    let word = [];
-    for(let i = 0; i < D.length; i++) {
-      word.push(D[i])
+function largeInOrder(arr, word) {
+  let currentWord;
+  let result = [arr[0]];
+  let queue = [];
+  while(arr.length) {
+    currentWord = arr.shift();
+    console.log(currentWord.length)
+      for(let i = 0; i < word.length; i++){
+        for(let n = 0; n < currentWord.length; n++){
+          console.log('current', currentWord[n]);
+          console.log('word', word[i] )
+
+          if(currentWord[n] === word[i]) {
+            queue.push(currentWord[n]);
+            word = word.slice(i);
+            console.log('main word', word)
+            // i++;
+          }
+          console.log('first', queue);
+          console.log('main word again', word.length, currentWord.length)
+        }
     }
-    console.log(word)
-    for(let n = 0; n <= S.length; n++) {
-      console.log('S', S[n]);
+    queue = Array(queue.join(''));
+    console.log('ugh',queue, result)
+    if(queue[0].length >= result[0].length){
+      result.pop();
+      result.push(queue.shift());
+    } else {
+      queue.shift();
     }
-    D.length--;
   }
+  // return result.join();
 }
-console.log(largeInOrder());
+
+// console.log('GOOGLE', largeInOrder(D, S));
 
 // Builds out a Node Tree - FUN FUN FUNCTION
 let categories = [
@@ -65,7 +78,32 @@ console.log(
 //   }
 // }
 
-// Bubble Sort
+// Linear Search *** Check if a value is in an array
+function linearSearch(arr, val) {
+  for(let i = 0; i < arr.length; i++) {
+    if(val === arr[i]) return i;
+  }
+  return -1;
+}
+console.log('LINEARSEARCH ', linearSearch([1,5,6,4,48,9], 48));
+
+// Binary Search *** remember it needs to be sorted
+function binarySearch(arr, val) {
+  let start = 0;
+  let end = arr.length -1;
+  let mid = Math.floor(end / 2);
+  while(arr[mid] !== val && start <= end) {
+    if(val < arr[mid]){
+      end = mid - 1;
+    } else {
+      start = mid + 1;
+    }
+    mid = Math.floor((start + end) / 2);
+  }
+  return arr[mid] === val ? mid : -1;
+}
+console.log('BINARYSEARCH ', binarySearch([1,5,6,47,48,50,54,61,68,90], 68));
+
 function bubbleSort(arr) {
   // controls pass throughs
   for(var i = arr.length - 1; i >= 0; i--) {
@@ -100,35 +138,39 @@ function bubs(arr) {
 console.log('SECONDBUBBLE ->', bubs([2,5,8,6,1,4,3,7]));
 
 function selectionSort(arr) {
-  var minIndex, temp;
   for (var i = 0; i < arr.length; i++) {
-    minIndex = i;
+    let min = i;
     for (var n = i + 1; n < arr.length; n++) {
-      if(arr[n] < arr[minIndex]){
-        minIndex = n;
+      if(arr[min] > arr[n]){
+        min = n;
       }
     }
-    temp = arr[i];
-    arr[i] = arr[minIndex];
-    arr[minIndex] = temp;
+    if(i !== min) {
+      let temp = arr[i];
+      arr[i] = arr[min];
+      arr[min] = temp;
+    }
   }
-  console.log('SELECTION ->', arr);
+   return arr;
 }
-selectionSort([9,5,8,6,1,2,8,9,4]);
+console.log('SELECTION ->', selectionSort([9,5,8,6,1,2,8,9,4]));
 
 // Insertion Sort
 function insertionSort(arr) {
-  var element, n;
-  for(var i = 0; i < arr.length; i++) {
-    element = arr[i];
-    for(var n = i - 1; n > -1 && arr[n] > element; n--) {
+  var currentVal;
+  for(var i = 1; i < arr.length; i++) {
+    currentVal = arr[i];
+    for(var n = i - 1; n >= 0 && arr[n] > currentVal; n--) {
+      console.log('loop n = ', n)
       arr[n + 1] = arr[n];
     }
-    arr[n + 1] = element;
+    console.log('outside of loop n = ', n)
+    arr[n + 1] = currentVal;
   }
-  console.log('INSERTION ->', arr);
+  return arr;
 }
-insertionSort([54, 26, 93, 17, 77, 31, 44, 55, 20]);
+
+console.log('INSERTION ->', insertionSort([54, 26, 93, 17, 77, 31, 44, 55, 20]));
 
 // Merge Sort
 // Split the array into halves and merge them recursively

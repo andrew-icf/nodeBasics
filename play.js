@@ -66,7 +66,7 @@ reverseStr('Hello World      ');
 function alphabetPosition(sen) {
   let result = sen.toLowerCase().replace(/[^a-z]/g, '') // ^ requiring a match to occur at the beginning of a line
         .replace(/./g, ([c]) => ' ' + (c.charCodeAt(0) - 'a'.charCodeAt(0) + 1))
-        .substr(1);
+        .substring(1);
   console.log(result);
 }
 alphabetPosition("TKdos");
@@ -552,7 +552,7 @@ const anagramWords = ['map', 'art', 'how', 'rat', 'tar', 'who', 'pam', 'shoop'];
 function anagram(anagramWords) {
   const anagrams = {};
   anagramWords.forEach((word) => {
-      let sortedWord = alphabetize(word);
+      let sortedWord = alphabetize(word); //split('').reverse().join('')
       if(!anagrams[sortedWord]) {
         return anagrams[sortedWord] = [word]; // anagrams = {'amp' : ['map'] }
       }
@@ -566,8 +566,6 @@ function alphabetize(word) {
   return word.split('').sort().join('');
 }
 console.log('anagram', anagram(anagramWords));
-
-
 
 function arrayAddition(arr) {
   let result = 0;
@@ -616,11 +614,10 @@ function charCount(str) {
 console.log('CHARCOUNT', charCount('aaAAssf 3 6 2 #$@ a4    '));
 
 function letterCount(str) {
-  var words = str.replace(/[^A-Za-zs]/g, '').split(/s+/);
-
+  var words = str.split(' ');
   var counts = words.map(function(word) {
-    word = word.toLowerCase();
-    var letters = [];
+    word = word.toLowerCase().match(/[A-Za-z]/g);
+    var letters = {};
     for (letter of word) {
       if (letters[letter]) {
         letters[letter] += 1;
@@ -645,7 +642,7 @@ function letterCount(str) {
   if (greatest <= 1) return -1;
   return words[greatestCounts.indexOf(greatest)];
 }
-console.log('LETTER-COUNT', letterCount('coderbyte is cool'));
+console.log('LETTER-COUNT', letterCount('coderbyte is really cool'));
 
 function dashInsert(str) {
     let arr = str.split('');
@@ -675,3 +672,154 @@ function stringPermutation(str) {
   return results;
 }
 console.log('STRINGPERMUTATION ', stringPermutation('ab'));
+
+function grabString(str1, str2){
+  var reg = new RegExp(str2, 'g');
+  var result = str1.replace(reg, '');
+  return result;
+}
+console.log('grabString', grabString('Hello There', 'e'));
+
+function naiveStringSearch(str, pattern) {
+  let count = 0;
+  for(let i = 0; i < str.length; i++) {
+    for(let j = 0; j < pattern.length; j++) {
+      if(pattern[j] !== str[i+j]) break;
+      if(j === pattern.length - 1) count++;
+    }
+  }
+  return count;
+}
+console.log('NAIVESTRINGSEARCH', naiveStringSearch('asdf asfasd sdaf', 'asdf'));
+
+function isPrime(num) {
+  if (typeof num !== 'number') {
+    return 'Please enter a number.';
+  }
+  return num % 2 === 0 ? false : true;
+}
+console.log('ISPRIME', isPrime(13));
+
+function HDistance(arr){
+  let largest;
+  arr[0].length > arr[1].length ? largest = arr[0] : largest = arr[1];
+
+  const left = arr[0];
+  const right = arr[1];
+  let count = 0;
+  for(let i = 0; i < largest.length; i++){
+    if(left[i] !== right[i]){
+      count++;
+    }
+  }
+  return count;
+}
+console.log(HDistance(['asdf', 'asdsdf']));
+
+function twoSums(arr, S){
+  let resultSums = [];
+  let cache = {};
+  for(let i = 0; i < arr.length; i++) {
+    let sumMinusElement = S - arr[i]; // this will assign a number
+    if(cache[sumMinusElement.toString()] !== undefined){ // .toString is not needed but good to specify for 'key' behavior
+      resultSums.push([arr[i], sumMinusElement]);
+    }
+    cache[arr[i].toString()] = arr[i];
+    console.log(cache);
+  }
+  return resultSums;
+}
+console.log('TWOSUMS ', twoSums([3,5,2,-4,8,11],7));
+
+function superIncreasing(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+      if (arr[i] <= sum) {
+          return false;
+      }
+      sum += arr[i];
+  }
+  return true;
+}
+console.log('INCREASING ', superIncreasing([1,2,4,50]));
+
+// How do you make a function that takes f and returns a function that calls f on a timeout?  
+// function foo(f){ 
+//   return (function() {         
+//     setTimeout(function() {
+//       f();
+//     }, 0);       
+//   })();     
+// }
+// foo();
+
+// function call50ms(f){
+//     setInterval(f.bind(null, ...Array.from(arguments).slice(1)), 50);
+// }
+// function hi() {
+//   console.log('hi');
+// }
+// call50ms(hi);
+// clearInterval(call50ms);
+
+function arrangeArr(arr1, arr2) {
+  for(let i = 0; i < arr1.length; i++) {
+    swap(arr1, i, arr2[i]);
+  }
+  function swap(arr, i, j){
+    let temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  return arr1;
+}
+console.log('ARRANGEARR ', arrangeArr(['C','D','E','F','G'], [3,0,4,1,2]));
+
+function circular(arr){
+  let values = {};
+  let currentVal = 0;
+  for(let val of arr) {
+    if(val === 0) return false;
+    if(!values[val]){
+      values[val] = val;
+    }
+    currentVal = (currentVal + values[val]) % arr.length;
+  }
+  return currentVal === 0;
+}
+console.log('CIRCULAR ARRAY ', circular([2,2,-1]));
+
+// Debounce during scroll and other events
+// debounce function that will wrap our event
+function debounce(fn, delay) {
+  // maintain a timer
+  let timer = null;
+  // closure function that has access to timer
+  return function() {
+    // get the scope and parameters of the function
+    // via 'this' and 'arguments'
+    let context = this;
+    let args = arguments;
+    // if event is called, clear the timer and start over
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      fn.apply(context, args);
+    }, delay);
+  }
+}
+
+// find the closest enemy in an array using 1 as me 2 as enemy
+function closestEnemy(arr) {
+  let one = arr.indexOf(1);
+  let length = arr.length;
+
+  for(let i = 0; i < length; i++){
+    if(arr[i] === 2) {
+      let distance = Math.abs(i - one);
+      if(distance < length){
+        length = distance;
+      }
+    }
+  }
+  return (length === arr.length) ? 0 : length;
+}
